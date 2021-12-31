@@ -1,0 +1,24 @@
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+  .page-footer {
+    padding-top: 20px;
+    color: #fff;
+    background-color: #30757d;
+}
+
+nav {
+  color: #fff;
+  background-color: #30757d;
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+}

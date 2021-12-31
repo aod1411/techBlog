@@ -1,18 +1,27 @@
-<div class="card">
-    <div class="card-title"><h2>Login</h2></div>
-    <form id="loginForm">
-        <div>
-            <label>Username</label>
-            <input type="text" id="usernameLogin" />
+<div class="container">
+
+  <div class="row" style="margin-top: 1rem;">
+    <form class="col s12 login-form">
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="username-login"  type="text" class="validate">
+          <label for="username-login">Username</label>
         </div>
-        <div>
-            <label>Password</label>
-            <input type="text" id="passwordLogin"/>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">lock_outline</i>
+          <input id="password-login" type="password" class="validate">
+          <label for="password-login">Password</label>
         </div>
-        <button id="loginBtn" class="btn">Login</button>
-        <h4>Dont have an account yet? Sign up here!</h4>
-        <a type="button" href="/signup">Sign Up Here</a>
+      </div>
+      <button type="submit" class="btn waves-effect waves-light" id="loginBtn">Login</button>
+      <div style="margin-top: 1rem">
+        <a href="/signup" id="signupBtn" class="waves-effect waves-teal btn">Sign-Up</a>
+        
+      </div>
     </form>
+  </div>
 </div>
 
-<script src="/js/login.js"></script>
+{{!-- run login script --}}
+<script src="./js/login.js"></script>

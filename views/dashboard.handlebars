@@ -1,0 +1,25 @@
+
+
+    <div class="row center">
+        <h4>Welcome {{posts.[0].user.username}}</h4>
+        <a href="/dashboard/new"><button type="button" class="btn">Create Post</button></a>
+    </div>
+
+
+
+{{!-- display posts if user has any --}}
+{{#if posts.length}}
+
+<div class="row">
+    
+
+<h5 class="center">{{posts.[0].user.username}}'s Posts</h5>
+<hr style="height: 0.5rem; background-color:#0eb9f7; color:#6ed0ee; border-width: 0; border-radius: 0.5rem">
+
+    {{#each posts as |post|}}
+    <div class="col l3">
+        {{> dashData post}}
+    </div>
+    {{/each}}
+</div>
+    {{/if}}

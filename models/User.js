@@ -1,11 +1,10 @@
-const { Model, DataTypes } = require("sequelize")
-const bcrypt = require("bcrypt")
-const sequelize = require("../config/config")
+const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
+const sequelize = require('../config/connection');
 
 class User extends Model {
-
     checkPassword(loginPw) {
-        return bcrypt.compareSync(loginPw, this.password)
+        return bcrypt.compareSync(loginPw, this.password);
     }
 }
 
@@ -15,37 +14,51 @@ User.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         username: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [4]
+                //make sure there is at least 8 chars in password
+                min: 2,
             }
         }
     },
     {
         hooks: {
+            //before creating user in db it encrypts password to not store it in plain-text
             beforeCreate: async (newUserData) => {
-                newUserData.password = await bcrypt.hash(newUserData.password, 10)
-                return newUserData
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
             },
-            beforeUpdate: async (updatedUserData) => {
-                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
-                return updatedUserData;
-            }
+            beforeBulkCreate: async (users) => {
+                //loop thru array for users to grab the password
+                for (const user of users) {
+                    const {
+                        password
+                    } = user;
+                    //hash password
+                    var saltRounds = 10;
+                    var salt = bcrypt.genSaltSync(saltRounds);
+                    var hash = await bcrypt.hashSync(password, salt);
+                    user.password = hash;
+                }
+                //return user with hashed password
+                return User;
+
+
+            },
         },
         sequelize,
-        timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: "User"
+        modelName: 'user',
     }
-)
+);
 
 module.exports = User;
